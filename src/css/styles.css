@@ -10,6 +10,7 @@ body {
   background-color: #fafafa;
   color: #212121;
   line-height: 1.5;
+
 }
 
 #search-box {
@@ -17,4 +18,30 @@ body {
   padding: 8px;
   max-width: 320px;
   margin-bottom: 16px;
+}
+
+.country-list_item{
+display: flex;
+margin-bottom: 20px;
+
+}
+.country-list_flag{
+  margin-right: 20px;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+}
+.country_flag{
+  margin-right: 20px;
+}
+.country_info{
+  list-style: none;
+  padding-left: 0;
+}
+
+.country_info_comment{
+  font-weight: bold;
 }
