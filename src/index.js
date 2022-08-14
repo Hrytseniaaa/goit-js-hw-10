@@ -16,7 +16,7 @@ const fetchCountries= (name) => {
 
     fetch(`https://restcountries.com/v2/name/${nameEl}?fields=name,capital,population,flags,languages`).then(response => {
         if (!response.ok) {
-            Notiflix.Notify.warning('Oops, there is no country with that name');
+            Notiflix.Notify.failure('Oops, there is no country with that name');
             noRequest()
         }
         return response.json();
