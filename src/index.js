@@ -1,6 +1,7 @@
 import Notiflix from 'notiflix';
 import './css/styles.css';
 var debounce = require('lodash.debounce');
+import fetchCountries from './ fetchCountries'
 
 const DEBOUNCE_DELAY = 300;
 const refs = {
@@ -10,41 +11,39 @@ const refs = {
 
 
 
-const fetchCountries= (name) => {
-    const nameEl = name.target.value.trim();
-    
 
-    fetch(`https://restcountries.com/v2/name/${nameEl}?fields=name,capital,population,flags,languages`).then(response => {
-        if (!response.ok) {
-            Notiflix.Notify.failure('Oops, there is no country with that name');
-            noRequest()
-        }
-        return response.json();
-    })
-  
+const requestInput = (e) => {
+    const nameEl = e.target.value.trim()
+    if (!nameEl) {
+        noRequest()
+        return   
+    } 
+    fetchCountries(nameEl) 
+         
     .then(countries => {
-
-        if (!countries.length) {
-             noRequest()
-        return
-        }
-        else if (countries.length === 1) {
+       
+      if (countries.length === 1) {
             showOneCountry(countries)
-           return
-
-        }     
+           
+      }  
+        
         else if (countries.length > 10) {  
             Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
                   noRequest()
-            return
+            
         }   
          else if (countries.length >= 2) {
              showCountriesList(countries)
-        }
+        } 
 
+    }).catch(error => {
+         Notiflix.Notify.failure('Oops, there is no country with that name');
+        noRequest()
     })
-
+   
 }
+
+
 
 const noRequest  = () => {
     refs.countryList.innerHTML = ''
@@ -84,7 +83,7 @@ const showOneCountry = (countries) => {
 };
 
     
-refs.input.addEventListener('input', debounce(fetchCountries, DEBOUNCE_DELAY));
 
+refs.input.addEventListener('input', debounce(requestInput, DEBOUNCE_DELAY));
 
 
